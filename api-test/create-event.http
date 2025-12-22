@@ -1,0 +1,9 @@
+POST http://localhost:8080/event
+Content-Type: application/json
+
+{
+  "title": "Sample Event",
+  "description": "This is a sample event description.",
+  "location": "Sample Location",
+  "date_time": "2023-10-15T10:00:00Z"
+}

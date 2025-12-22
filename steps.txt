@@ -1,0 +1,2 @@
+Instalar o go get -u  github.com/gin-gonic/gin
+Instalar o go get github.com/glebarez/sqlite   (Essa versão porque algumas dão problema no Windows por causa do CGO desabitado)
