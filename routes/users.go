@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/event-backend-api/models"
+	"github.com/event-backend-api/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,17 +25,29 @@ func signUp(context *gin.Context) {
 
 func login(context *gin.Context) {
 	var credentials models.User
+
 	if err := context.ShouldBindJSON(&credentials); err != nil {
-		context.JSON(400, gin.H{"error": err.Error()})
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	if err := credentials.ValidateCredentials(); err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid email or password"})
+		context.JSON(http.StatusUnauthorized, gin.H{
+			"error": "Invalid email or password",
+		})
 		return
 	}
+
+	token, err := utils.GenerateToken(credentials.Email, credentials.ID)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Could not authenticate user",
+		})
+		return
+	}
+
 	context.JSON(http.StatusOK, gin.H{
 		"message": "login successful",
+		"token":   token,
 	})
-
 }

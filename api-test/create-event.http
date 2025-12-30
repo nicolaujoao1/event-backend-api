@@ -1,8 +1,10 @@
-POST http://localhost:8080/event
+### Criar evento
+POST http://localhost:8080/events
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkaWxzb25AZ21haWwuY29tIiwiaXNzIjoiZXZlbnQtYmFja2VuZC1hcGkiLCJzdWIiOiIyIiwiZXhwIjoxNzY3MTE2NDc3LCJpYXQiOjE3NjcxMDkyNzd9.jsOCkQDr5SE8AdLlGWbpXhur52tYDQ1hu3e-YAHXsGE
 
 {
-  "title": "Sample Event",
+  "title": "New Event 3",
   "description": "This is a sample event description.",
   "location": "Sample Location",
   "date_time": "2023-10-15T10:00:00Z"

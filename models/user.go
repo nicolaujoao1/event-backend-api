@@ -34,10 +34,10 @@ func (u *User) Save() error {
 }
 
 func (u *User) ValidateCredentials() error {
-	var query = `SELECT password FROM users WHERE email = ?`
+	var query = `SELECT id,password FROM users WHERE email = ?`
 	row := db.DB.QueryRow(query, u.Email)
 	var storedHashedPassword string
-	err := row.Scan(&storedHashedPassword)
+	err := row.Scan(&u.ID, &storedHashedPassword)
 
 	if err != nil {
 		return errors.New("invalid credentials")
@@ -48,4 +48,16 @@ func (u *User) ValidateCredentials() error {
 	}
 	return nil
 
+}
+
+func GetUserById(id int64) (*User, error) {
+	query := `SELECT email FROM users WHERE id = ?`
+	row := db.DB.QueryRow(query, id)
+	var e User
+	err := row.Scan(&e.ID, &e.Email)
+	if err != nil {
+		return nil, err
+	}
+
+	return &e, nil
 }
