@@ -13,11 +13,11 @@ func RegisterRoutes(server *gin.Engine) {
 	//EVENTS ROUTES
 	server.GET("/events", getEvents)
 	server.GET("/events/:id", getEventsById)
-	protected := server.Group("/")
-	protected.Use(middlewares.Authenticate)
-	{
-		server.POST("/events", middlewares.Authenticate, createEvent)
-		server.PUT("/events/:id", updateEvent)
-		server.DELETE("/events/:id", deleteEvent)
-	}
+
+	server.POST("/events", middlewares.Authenticate, createEvent)
+	server.PUT("/events/:id", middlewares.Authenticate, updateEvent)
+	server.DELETE("/events/:id", middlewares.Authenticate, deleteEvent)
+	server.POST("/events/:id/register", middlewares.Authenticate, registerForEvent)
+	server.DELETE("/events/:id/register", middlewares.Authenticate, cancelRegistration)
+
 }
